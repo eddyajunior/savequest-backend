@@ -10,9 +10,10 @@ venv/
 
 # Environment
 .env
+.env.test
 .env.*
-
 !.env.example
+!.env.test.example
 
 # Tests and coverage
 .pytest_cache/

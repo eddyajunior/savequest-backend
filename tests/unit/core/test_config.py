@@ -15,7 +15,7 @@ def test_settings_should_have_default_values(
 
     assert settings.app_name == "SaveQue$t API"
     assert settings.app_version == "0.1.0"
-    assert settings.environment == "local"
+    assert settings.environment == "development"
     assert settings.debug is False
 
 

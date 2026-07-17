@@ -1,3 +1,4 @@
+import os
 from collections.abc import Generator
 from pathlib import Path
 
@@ -11,19 +12,25 @@ TEST_ENV_FILE = Path(".env.test")
 
 @pytest.fixture(scope="session")
 def test_database_url() -> str:
-    values = dotenv_values(TEST_ENV_FILE)
-    database_url = values.get("DATABASE_URL")
+    database_url = os.getenv("DATABASE_URL")
+
+    if not database_url and TEST_ENV_FILE.exists():
+        values = dotenv_values(TEST_ENV_FILE)
+        database_url = values.get("DATABASE_URL")
 
     if not database_url:
         pytest.fail(
-            "DATABASE_URL não encontrada no arquivo .env.test",
+            "DATABASE_URL não encontrada nas variáveis de ambiente "
+            "nem no arquivo .env.test",
         )
 
     return str(database_url)
 
 
 @pytest.fixture(scope="session")
-def test_engine(test_database_url: str) -> Generator[Engine]:
+def test_engine(
+    test_database_url: str,
+) -> Generator[Engine]:
     engine = create_engine(
         test_database_url,
         pool_pre_ping=True,

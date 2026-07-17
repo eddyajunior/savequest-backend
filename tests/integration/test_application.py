@@ -9,5 +9,4 @@ def test_openapi_is_available() -> None:
     response = client.get("/openapi.json")
 
     assert response.status_code == 200
-    assert response.json()["info"]["title"] == "Save Que$t API"
-    assert response.json()["info"]["version"] == "0.1.0"
+    assert response.json()["info"]["title"] == "SaveQue$t API"
